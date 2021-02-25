@@ -80,8 +80,8 @@ class ContactData extends Component {
                 elementType: 'select',
                 elementConfig: {
                     options: [
-                        {value: 'fastest', diplayValue: 'Fast'},
-                        {value: 'cheapest', diplayValue: 'Cheap'}
+                        {value: 'fastest', displayValue: 'Fast'},
+                        {value: 'cheapest', displayValue: 'Cheap'}
                     ]
                 },
                 valid: true,
@@ -127,7 +127,7 @@ class ContactData extends Component {
         if (!rules) {
             return true;
         }
-        
+
         if(rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
