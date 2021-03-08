@@ -55,7 +55,7 @@ class Auth extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email, this.state.controls.password);
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
     }
 
     validateForm(value, rules) {
