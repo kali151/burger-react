@@ -11,7 +11,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actionsTypesBurger from '../../store/actions/index';
 import axios from '../../axios-orders';
 
-class BurgerBuilder extends Component {
+// export to make tests enabled
+export class BurgerBuilder extends Component {
     // constructor(props) {
     //     super(props);
     //     this.state = {...}
@@ -21,7 +22,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount () {
-        //cosole.log(this.props);
+        console.log(this.props);
         this.props.onInitIngredients();
     }
 
