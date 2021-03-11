@@ -7,6 +7,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
+import { updateObject, validateForm } from '../../shared/utility';
 
 class Auth extends Component {
     state = {
@@ -50,15 +51,13 @@ class Auth extends Component {
     }
 
     inputChangedHandler = (event, controlName) => {
-        const updatedControls = {
-            ...this.state.controls,
-            [controlName]: {
-                ...this.state.controls[controlName],
+        const updatedControls = updateObject(this.state.controls, {
+            [controlName]: updateObject(this.state.controls[controlName], {
                 value: event.target.value,
-                valid: this.validateForm(event.target.value, this.state.controls[controlName].validation),
+                valid: validateForm(event.target.value, this.state.controls[controlName].validation),
                 touched: true
-            }
-        };
+            })
+        });
         this.setState({controls: updatedControls});
     }
 
@@ -71,27 +70,6 @@ class Auth extends Component {
         this.setState(prevState => {
             return {isSignup: !prevState.isSignup}
         })
-    }
-
-    validateForm(value, rules) {
-        let isValid= true;
-
-        if (!rules) {
-            return true;
-        }
-
-        if(rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if(rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-         
-        return isValid;
     }
     
     render () {
