@@ -7,8 +7,8 @@ import classes from './ContactData.css';
 import axios from '../../../axios-orders';
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-// import { purchaseBurger } from '../../../store/actions/order';
 import * as actions from '../../../store/actions/index';
+import { updateObject, validateForm } from '../../../shared/utility';
 
 class ContactData extends Component {
     state = {
@@ -19,7 +19,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'your name'
                 },
-                value: 'Coco',
+                value: '',
                 valid: false,
                 touched: false,
                 validation: {
@@ -106,58 +106,35 @@ class ContactData extends Component {
         for (let formEl in this.state.orderForm) {
             formData[formEl] = this.state.orderForm[formEl].value;
         }
-      //  console.log("form data: ", formData);
+      //  //cosole.log("form data: ", formData);
 
         const order = {
             ingredients: this.props.ings,
             price: this.props.prc,
-            orderData: formData
+            orderData: formData,
+            userId: this.props.userId
         }
 
-        this.props.onOrder(order)
-    }
-
-    validateForm(value, rules) {
-        let isValid= true;
-
-        if (!rules) {
-            return true;
-        }
-
-        if(rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if(rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-         
-        return isValid;
+        this.props.onOrder(order, this.props.token)
     }
 
     inputChangedHandler = (event, inputId) => {
-        //console.log(event.target.value);
-        const updatedForm = {
-            ...this.state.orderForm
-        };
         //clone deeply
-        const updatedElement = {
-            ...updatedForm[inputId]
-        };
-        updatedElement.value = event.target.value;
-        // validation
-        updatedElement.touched = true;
-        updatedElement.valid = this.validateForm(updatedElement.value, updatedElement.validation);
-        updatedForm[inputId] = updatedElement;
+        const updatedElement = updateObject(this.state.orderForm[inputId], {
+            value: event.target.value,
+            valid: validateForm(event.target.value, this.state.orderForm[inputId].validation),
+            touched: true
+        }) ;
+
+        const updatedForm = updateObject(this.state.orderForm,  {
+            [inputId]: updatedElement
+        });
 
         let formValid = true;
         for (let el in updatedForm) {
             formValid = updatedForm[el].valid && formValid;
         }
-        console.log("updatedForm: ", updatedForm.zipCode.valid);
+        //cosole.log("updatedForm: ", updatedForm.zipCode.valid);
         this.setState({orderForm: updatedForm,
             formIsValid: formValid});
     }
@@ -210,13 +187,15 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         prc: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrder: (orderData) => dispatch(actions.purchaseBurger(orderData))
+        onOrder: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
     }
 }
 
