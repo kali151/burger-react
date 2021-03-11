@@ -27,7 +27,7 @@ export const purchaseBurger = (data, token) => {
         dispatch(purchaseStart());
         axios.post( '/orders.json?auth=' + token, data )
             .then( response => {
-                //cosole.log("response data: ", response.data);
+                console.log("response data: ", response.data);
                 dispatch(purchaseSuccess(response.data.name, data));
                 // this.setState( { loading: false } );
                 // this.props.history.push('/');
@@ -72,7 +72,7 @@ export const fetchOrders = (token, userId) => {
         axios.get('/orders.json' + queryParams)
         .then(res => {
             const fetchedOrders = [];
-            //cosole.log("res data: ", res.data);
+            console.log("res data: ", res.data);
             for (let key in res.data) {
                 fetchedOrders.push({
                     ...res.data[key],

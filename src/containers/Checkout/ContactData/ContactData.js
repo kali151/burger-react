@@ -106,7 +106,7 @@ class ContactData extends Component {
         for (let formEl in this.state.orderForm) {
             formData[formEl] = this.state.orderForm[formEl].value;
         }
-      //  //cosole.log("form data: ", formData);
+      //  console.log("form data: ", formData);
 
         const order = {
             ingredients: this.props.ings,
@@ -134,7 +134,7 @@ class ContactData extends Component {
         for (let el in updatedForm) {
             formValid = updatedForm[el].valid && formValid;
         }
-        //cosole.log("updatedForm: ", updatedForm.zipCode.valid);
+        console.log("updatedForm: ", updatedForm.zipCode.valid);
         this.setState({orderForm: updatedForm,
             formIsValid: formValid});
     }

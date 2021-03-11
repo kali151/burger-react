@@ -53,11 +53,11 @@ export const auth = (email, password, isSignUp) => {
             password: password,
             returnSecureToken: true
         }
-        //cosole.log("logging url: ", url, "authData: ", authData);
+        console.log("logging url: ", url, "authData: ", authData);
         axios.post(url, authData)
             .then(response => {
                 const expDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                //cosole.log("auth ok: ", response);
+                console.log("auth ok: ", response);
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expDate', expDate)
                 localStorage.setItem('userId', response.data.localId);
@@ -65,7 +65,7 @@ export const auth = (email, password, isSignUp) => {
                 dispatch(checkAuthTimeout(response.data.expiresIn));
             })
             .catch(err => {
-                //cosole.log("auth error: ", err);
+                console.log("auth error: ", err);
                 dispatch(authFail(err.response.data.error));
             })
     }; 
@@ -85,7 +85,7 @@ export const authCheckState = () => {
             dispatch(logout());
         } else {
             const expDate = new Date(localStorage.getItem('expDate'));
-            //cosole.log("expDate: ", expDate, " new Date: ", new Date());
+            console.log("expDate: ", expDate, " new Date: ", new Date());
             if (expDate > new Date()) {
                 const userId = localStorage.getItem('userId');
                 dispatch(authSuccess(token, userId));
