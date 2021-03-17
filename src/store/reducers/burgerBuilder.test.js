@@ -1,12 +1,12 @@
 import reducer from './burgerBuilder';
-import * as actionTypes from '../actions/actionTypes';
+// import * as actionTypes from '../actions/actionTypes';
 
-const ingrs = {
-    salad: 2,
-    cheese: 2,
-    meat: 8,
-    bacon: 2
-}
+// const ingrs = {
+//     salad: 2,
+//     cheese: 2,
+//     meat: 8,
+//     bacon: 2
+// }
 
 describe('burger reducer', () => {
     it('should return the init state', () => {
