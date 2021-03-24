@@ -1,5 +1,5 @@
 import * as actionsTypes from '../actions/actionTypes'
-import {updateObject} from '../../shared/utility';
+import { updateObject } from '../../shared/utility';
 
 const initialState = {
     ingredients: null,
@@ -22,7 +22,7 @@ const INGREDIENT_PRICES = {
 };
 
 const addIngredient = (state, action) => {
-    const updatedIng = {[action.ingredientName]: state.ingredients[action.ingredientName] + 1}
+    const updatedIng = { [action.ingredientName]: state.ingredients[action.ingredientName] + 1 }
     const updatedIngs = updateObject(state.ingredients, updatedIng)
     const updatedState = {
         ingredients: updatedIngs,
@@ -33,11 +33,11 @@ const addIngredient = (state, action) => {
 }
 
 const removeIngredient = (state, action) => {
-    const updatedIng = {[action.ingredientName]: state.ingredients[action.ingredientName] - 1}
+    const updatedIng = { [action.ingredientName]: state.ingredients[action.ingredientName] - 1 }
     const updatedIngs = updateObject(state.ingredients, updatedIng)
     const updatedState = {
         ingredients: updatedIngs,
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
         building: true
     }
     return updateObject(state, updatedState);
@@ -56,9 +56,9 @@ const setIngredients = (state, action) => {
         building: false
     })
 }
-const reducer = (state = initialState, action ) => {
+const reducer = (state = initialState, action) => {
 
-    switch(action.type) {
+    switch (action.type) {
         case actionsTypes.ADD_INGREDIENT:
             return addIngredient(state, action)
         case actionsTypes.REMOVE_INGREDIENT:
@@ -66,8 +66,8 @@ const reducer = (state = initialState, action ) => {
         case actionsTypes.SET_INGREDIENTS:
             return setIngredients(state, action)
         case actionsTypes.FETCH_INGREDIENTS_FAILED:
-            return updateObject(state, {error: true})
-        default: 
+            return updateObject(state, { error: true })
+        default:
             return state;
     }
 };
