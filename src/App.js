@@ -20,9 +20,12 @@ const Auth = React.lazy(() => {
 });
 
 const app = props => {
+  // onj destructuring to not pass whole props to useEffect
+  const { onTryAutoSignup } = props;
+
   useEffect(() => {
-    props.onTryAutoSignup();
-  }, [])
+    onTryAutoSignup();
+  }, [onTryAutoSignup])
 
   let routes = (
     <Switch>
