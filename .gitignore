@@ -1,5 +1,8 @@
+#dep
 ./node_modules
 .firebase/
 .firebaserc
 .github/
 build/
+#api
+.env

@@ -132,7 +132,7 @@ const contactData = props => {
         for (let el in updatedForm) {
             formValid = updatedForm[el].valid && formValid;
         }
-        console.log("updatedForm: ", updatedForm.zipCode.valid);
+        // console.log("updatedForm: ", updatedForm.zipCode.valid);
         setOrderForm(updatedForm);
         setFormIsValid(formValid);
     }

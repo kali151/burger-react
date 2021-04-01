@@ -33,7 +33,7 @@ const burgerBuilder = props => {
     // const { onInitIngredients } = props;
 
     useEffect(() => {
-        console.log(props);
+        //console.log(props);
         onInitIngredients();
     }, [onInitIngredients])
 
