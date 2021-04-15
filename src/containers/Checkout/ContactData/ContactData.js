@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux'
 
 import Button from '../../../components/UI/Button/Button';
@@ -11,6 +11,13 @@ import * as actions from '../../../store/actions/index';
 import { updateObject, validateForm } from '../../../shared/utility';
 
 const contactData = props => {
+    const divRef = useRef(null)
+    const { onOrder } = props;
+
+    useEffect(() => {
+        divRef.current.scrollIntoView({ behavior: 'smooth' });
+    }, [onOrder]);
+
     const [orderForm, setOrderForm] = useState({
         name: {
             elementType: 'input',
@@ -162,6 +169,7 @@ const contactData = props => {
             )
 
             )}
+            <div ref={divRef} />
             {/* <Input inputtype="input" type="email" name="email" placeholder="Your Mail" />
                 <Input inputtype="input" type="text" name="street" placeholder="Street" />
                 <Input inputtype="input" type="text" name="postal" placeholder="Postal Code" /> */}
